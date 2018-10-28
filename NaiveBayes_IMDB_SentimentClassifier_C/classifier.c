@@ -64,7 +64,11 @@ int main(void){
     probCalc((Review **)&test_reviews, totalPosWords, totalNegWords);
     printf("testing error: %f%%\n",error((Review **)&test_reviews)*100);
     
-
+    printf("This is how the first 10 test set reviews are classified:");
+    for(int i=0; i<10; ++i){
+        Review* r = test_reviews[i];
+        printf("label: %d, class: %d\n", r->label, r->class);
+        }
     return 0;
 }
 
