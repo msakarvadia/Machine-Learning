@@ -22,20 +22,21 @@ typedef struct review{
     kv *firstWord;
 }Review;
 
-Review* train_reviews[REVCOUNT];    
-Review* test_reviews[REVCOUNT];    
-float posWordsFreq[100000];
+Review* train_reviews[REVCOUNT]; //Create 2 arrays containing structs of all training reviews/test reviews   
+Review* test_reviews[REVCOUNT];
+
+float posWordsFreq[100000];  //each index represents the word, and value at the index tells that words frequency out of the positive/negative class
 float negWordsFreq[100000];
 
 float posWordsProb[100000];
 float negWordsProb[100000];
 
-void lineParser(char* file, Review**);
-void printReview(Review*);
-unsigned int posWordCounter(Review*);
-unsigned int negWordCounter(Review*);
-void probCalc(Review** rev, int totalNegWords, int totalPosWords);
-float error(Review** rev);
+void lineParser(char* file, Review**); //takes in dict (which was meant for python) and parses the file into an array of structs
+void printReview(Review*);             //prints all the words and their freqencies of the review of your choosing
+unsigned int posWordCounter(Review*);  //counts the total number of positive words (including repeats)
+unsigned int negWordCounter(Review*);  //counts the total number of negative words (including repeats)
+void probCalc(Review** rev, int totalNegWords, int totalPosWords); //uses Naive Bayes rule to classify reviews
+float error(Review** rev);             //claculates error rate after classifiing a dataset
 
 int main(void){
     
@@ -48,7 +49,7 @@ int main(void){
     }
 
     lineParser("labeledBow_train.feat", (Review **)&train_reviews);       
-    for(size_t i = 0; i < REVCOUNT; ++i){
+    for(size_t i = 0; i < REVCOUNT; ++i){        //itterates through all the reviews
         //  printReview(train_reviews[i]);
         totalPosWords += posWordCounter(train_reviews[i]);
         totalNegWords += negWordCounter(train_reviews[i]);
